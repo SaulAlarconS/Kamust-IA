@@ -47,7 +47,15 @@ cmake --build build --config Release --parallel
 
 CMake descarga JUCE 7.0.12 automáticamente. Los archivos quedan en `build/Kamust_IA_artefacts/Release/`.
 
-## Instalación
+## Instalación con instalador (recomendado)
+
+- **Windows**: ejecuta `KamustIA-Setup-Windows.exe`. Instala el plugin en `C:\Program Files\Common Files\VST3\` y pide permisos de administrador.
+- **macOS**: ejecuta `KamustIA-macOS.pkg`. Instala el VST3 en `/Library/Audio/Plug-Ins/VST3/` y la AU en `/Library/Audio/Plug-Ins/Components/`.
+
+Los instaladores se generan en GitHub Actions y aparecen como artefactos de cada ejecución. Como no están firmados, Windows (SmartScreen) y macOS (Gatekeeper) mostrarán una advertencia. En Windows pulsa "Más información" y "Ejecutar de todas formas". En macOS haz clic derecho sobre el `.pkg`, elige **Abrir** y confirma.
+
+## Instalación manual
+
 
 - **Windows**: copia `VST3/Kamust IA.vst3` en `C:\Program Files\Common Files\VST3\`.
 - **macOS VST3**: copia `VST3/Kamust IA.vst3` en `~/Library/Audio/Plug-Ins/VST3/`.

@@ -26,9 +26,37 @@ jobs:
       - name: Build
         run: cmake --build build --config Release --parallel
 
-      - name: Upload plugin artefacts
+      - name: Upload plugin bundles
         uses: actions/upload-artifact@v4
         with:
-          name: KamustIA-${{ matrix.os }}
+          name: KamustIA-plugins-${{ matrix.os }}
           path: build/Kamust_IA_artefacts/Release/
+          if-no-files-found: error
+
+      - name: Build Windows installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\Kamust-IA.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+
+      - name: Upload Windows installer
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: KamustIA-Setup-Windows
+          path: installer/Output/KamustIA-Setup-Windows.exe
+          if-no-files-found: error
+
+      - name: Build macOS installer
+        if: runner.os == 'macOS'
+        run: bash installer/build-macos-pkg.sh
+
+      - name: Upload macOS installer
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: KamustIA-Installer-macOS
+          path: KamustIA-macOS.pkg
           if-no-files-found: error
